@@ -7,7 +7,7 @@
 ## 恢复目标
 
 - 恢复 OpenClaw 运行环境
-- 恢复所有 Skills（8个）
+- 恢复所有 Skills（9个）
 - 恢复 Mem0 记忆系统连接
 - 恢复团队工作流能力
 
@@ -144,6 +144,16 @@ cd yuanting-group
 openclaw workspace use $(pwd)
 ```
 
+### 步骤 7.1：安装 agent-browser CLI
+
+```bash
+# 安装 CLI
+npm install -g agent-browser
+
+# 安装浏览器运行时（推荐含依赖）
+agent-browser install --with-deps
+```
+
 ### 步骤 8：重启 Gateway
 
 ```bash
@@ -256,7 +266,8 @@ openclaw skills install /path/to/skill
 - [ ] Mem0 插件已加载
 - [ ] Mem0 连接正常（`openclaw mem0 stats`）
 - [ ] Exa MCP 可用（`mcporter list`）
-- [ ] 所有 8 个技能可用
+- [ ] 所有 9 个技能可用
+- [ ] agent-browser CLI 可用（`agent-browser --version`）
 - [ ] 可以搜索记忆
 - [ ] 可以存储新记忆
 

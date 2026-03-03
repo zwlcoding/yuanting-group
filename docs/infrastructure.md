@@ -8,9 +8,10 @@
 
 - **更新日期**: 2026-03-03
 - **更新人**: 亏总 🎲 (战略总监)
-- **版本**: v1.1
+- **版本**: v1.2
 
 **更新记录**:
+- v1.2 (2026-03-03): 新增 agent-browser 技能，并同步灾备流程
 - v1.1 (2026-03-03): 新增 healthcheck、tmux 技能；统一团队成员角色描述
 - v1.0 (2026-03-03): 初始版本
 
@@ -30,6 +31,7 @@
 | **skill-vetter** | 技能审核工具 | ✅ 已安装 |
 | **summarize** | 内容摘要生成 | ✅ 已安装 |
 | **tmux** | 远程控制 tmux 会话 | ✅ 已安装 |
+| **agent-browser** | 无头浏览器自动化（CLI） | ✅ 已安装 |
 
 ### 1.1 Exa Web Search (Free) 配置
 
@@ -91,6 +93,23 @@ tmux capture-pane -t shared -p | tail -20
 
 # 发送命令到会话
 tmux send-keys -t shared "命令" Enter
+```
+
+### 1.4 Agent-Browser 配置
+
+无头浏览器自动化能力（基于 agent-browser CLI）。
+
+**安装命令**:
+```bash
+npm install -g agent-browser
+agent-browser install --with-deps
+```
+
+**常用命令**:
+```bash
+agent-browser open <url>
+agent-browser snapshot -i
+agent-browser click @e1
 ```
 
 ---
