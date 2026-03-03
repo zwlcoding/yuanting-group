@@ -160,6 +160,18 @@ agent-browser install --with-deps
 npm install -g summarize
 ```
 
+### 步骤 7.3：恢复多‑Agent 工作区与配置
+
+```bash
+# 建议结构（按需创建）
+mkdir -p ~/.openclaw/workspace/agents/{kuizong,mozong,hunzi,baage}
+
+# 将仓库中的多‑Agent 规划文档同步到工作区
+cp -r yuanting-group/docs/architecture ~/.openclaw/workspace/
+```
+
+> 后续根据 openclaw.json 的 agents/bindings 配置完成多 Agent 启用。
+
 ### 步骤 8：重启 Gateway
 
 ```bash
@@ -197,6 +209,7 @@ mcporter call 'exa.web_search_exa(query: "渊渟集团", numResults: 3)'
 │   │   ├── tmux/
 │   │   └── ...
 │   ├── memory/                # 本地记忆文件
+│   ├── agents/                # 多‑Agent 工作区
 │   └── MEMORY.md              # 长期记忆
 └── extensions/
     └── openclaw-mem0/         # Mem0 插件
@@ -276,6 +289,7 @@ openclaw skills install /path/to/skill
 - [ ] agent-browser CLI 可用（`agent-browser --version`）
 - [ ] Chromium runtime 可用（`agent-browser open https://example.com`）
 - [ ] summarize CLI 可用（`summarize "https://example.com" --length short`）
+- [ ] 多‑Agent 工作区存在（`~/.openclaw/workspace/agents/*`）
 - [ ] 可以搜索记忆
 - [ ] 可以存储新记忆
 

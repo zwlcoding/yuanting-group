@@ -8,9 +8,10 @@
 
 - **更新日期**: 2026-03-03
 - **更新人**: 亏总 🎲 (战略总监)
-- **版本**: v1.4
+- **版本**: v1.5
 
 **更新记录**:
+- v1.5 (2026-03-03): 建立多‑Agent 架构文档与工作区规划
 - v1.4 (2026-03-03): 安装 summarize CLI（PDF/URL 摘要）
 - v1.3 (2026-03-03): 安装 agent-browser CLI 与浏览器运行时
 - v1.2 (2026-03-03): 新增 agent-browser 技能，并同步灾备流程
@@ -254,7 +255,34 @@ openclaw mem0 search "关键词" --scope session
 
 ---
 
-## 三、环境信息
+## 三、多‑Agent 架构
+
+详见：`docs/architecture/multi-agent.md`
+
+**规划的 AgentId**:
+- `kuizong`（统筹/流程/基础设施）
+- `mozong`（产品/需求）
+- `hunzi`（开发/技术）
+- `baage`（测试/质量）
+
+**工作区建议结构**:
+```
+~/.openclaw/workspace
+├── agents/
+│   ├── kuizong/
+│   ├── mozong/
+│   ├── hunzi/
+│   └── baage/
+```
+
+**会话保护建议**:
+```
+{ "session": { "agentToAgent": { "maxPingPongTurns": 0 } } }
+```
+
+---
+
+## 四、环境信息
 
 | 项目 | 值 |
 |------|-----|
