@@ -63,9 +63,14 @@
 
 ---
 
-## 工作流
+## 文档索引
 
-详见 [docs/team.md](./docs/team.md)。
+| 文档 | 说明 |
+|------|------|
+| [docs/team.md](./docs/team.md) | 团队信息、工作流、核心价值观 |
+| [docs/infrastructure.md](./docs/infrastructure.md) | AI 基础设施配置 |
+| [docs/projects/](./docs/projects/) | 项目文档 |
+| [docs/disaster-recovery.md](./docs/disaster-recovery.md) | 灾备恢复手册 |
 
 ---
 
