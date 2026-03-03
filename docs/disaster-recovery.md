@@ -172,7 +172,13 @@ cp -r yuanting-group/docs/architecture ~/.openclaw/workspace/
 
 > 后续根据 openclaw.json 的 agents/bindings 配置完成多 Agent 启用。
 
-### 步骤 8：重启 Gateway
+### 步骤 8：恢复 Discord 多 Bot 配置
+
+1. 在 Discord Developer Portal 重新生成 4 个 Bot token
+2. 更新 `~/.openclaw/openclaw.json` 中 `discord.accounts` 的 token
+3. 确认 `bindings` 与 `chat.requireMention` 已配置
+
+### 步骤 9：重启 Gateway
 
 ```bash
 # 重启 Gateway 加载插件
@@ -290,6 +296,7 @@ openclaw skills install /path/to/skill
 - [ ] Chromium runtime 可用（`agent-browser open https://example.com`）
 - [ ] summarize CLI 可用（`summarize "https://example.com" --length short`）
 - [ ] 多‑Agent 工作区存在（`~/.openclaw/workspace/agents/*`）
+- [ ] Discord 多 Bot 已上线且可响应
 - [ ] 可以搜索记忆
 - [ ] 可以存储新记忆
 
