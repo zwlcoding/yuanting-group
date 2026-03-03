@@ -154,6 +154,12 @@ npm install -g agent-browser
 agent-browser install --with-deps
 ```
 
+### 步骤 7.2：安装 summarize CLI
+
+```bash
+npm install -g summarize
+```
+
 ### 步骤 8：重启 Gateway
 
 ```bash
@@ -269,6 +275,7 @@ openclaw skills install /path/to/skill
 - [ ] 所有 9 个技能可用
 - [ ] agent-browser CLI 可用（`agent-browser --version`）
 - [ ] Chromium runtime 可用（`agent-browser open https://example.com`）
+- [ ] summarize CLI 可用（`summarize "https://example.com" --length short`）
 - [ ] 可以搜索记忆
 - [ ] 可以存储新记忆
 
