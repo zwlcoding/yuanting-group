@@ -8,9 +8,10 @@
 
 - **更新日期**: 2026-03-03
 - **更新人**: 亏总 🎲 (战略总监)
-- **版本**: v1.2
+- **版本**: v1.3
 
 **更新记录**:
+- v1.3 (2026-03-03): 安装 agent-browser CLI 与浏览器运行时
 - v1.2 (2026-03-03): 新增 agent-browser 技能，并同步灾备流程
 - v1.1 (2026-03-03): 新增 healthcheck、tmux 技能；统一团队成员角色描述
 - v1.0 (2026-03-03): 初始版本
@@ -111,6 +112,10 @@ agent-browser open <url>
 agent-browser snapshot -i
 agent-browser click @e1
 ```
+
+**已安装版本**:
+- agent-browser CLI: 0.15.2
+- Chromium runtime: playwright chromium (cft)
 
 ---
 
