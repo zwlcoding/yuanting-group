@@ -240,7 +240,7 @@ openclaw mem0 search "关键词" --scope session
 - [Mem0 官方文档](https://docs.mem0.ai)
 - [OpenClaw 文档](https://docs.openclaw.ai)
 - [Exa MCP 文档](https://docs.exa.ai)
-- [插件 GitHub](https://github.com/mem0ai/openclaw-mem0) *(待确认)*
+- [OpenClaw-Mem0 插件 (npm)](https://www.npmjs.com/package/@mem0/openclaw-mem0)
 
 ---
 
