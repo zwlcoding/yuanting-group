@@ -8,7 +8,11 @@
 
 - **更新日期**: 2026-03-03
 - **更新人**: 亏总 (AI 助理)
-- **版本**: v1.0
+- **版本**: v1.1
+
+**更新记录**:
+- v1.1 (2026-03-03): 新增 healthcheck、tmux 技能
+- v1.0 (2026-03-03): 初始版本
 
 ---
 
@@ -21,9 +25,11 @@
 | **exa-web-search-free** | AI 搜索引擎，支持网页/代码/公司研究搜索 | ✅ 已配置 |
 | **find-skills** | 技能发现与搜索 | ✅ 已安装 |
 | **github** | GitHub 操作集成 | ✅ 已安装 |
+| **healthcheck** | 系统安全加固与审计 | ✅ 已安装 |
 | **self-improving-agent** | 自我改进代理 | ✅ 已安装 |
 | **skill-vetter** | 技能审核工具 | ✅ 已安装 |
 | **summarize** | 内容摘要生成 | ✅ 已安装 |
+| **tmux** | 远程控制 tmux 会话 | ✅ 已安装 |
 
 ### 1.1 Exa Web Search (Free) 配置
 
@@ -39,6 +45,53 @@ mcporter config add exa "https://mcp.exa.ai/mcp?exaApiKey=${EXA_API_KEY}&tools=w
 - `people_search_exa` - 人员搜索
 
 **配置位置**: `/root/.openclaw/workspace/config/mcporter.json`
+
+### 1.2 Healthcheck 配置
+
+系统安全加固与审计技能，用于定期检查 OpenClaw 运行环境的安全状态。
+
+**主要功能**:
+- 运行 `openclaw security audit` 安全检查
+- 检查防火墙、SSH 配置
+- 系统更新状态检查
+- 定时任务配置 (`openclaw cron`)
+
+**使用方式**:
+```bash
+# 快速安全检查
+openclaw security audit
+
+# 深度检查
+openclaw security audit --deep
+
+# 自动修复
+openclaw security audit --fix
+
+# 查看更新状态
+openclaw update status
+```
+
+### 1.3 Tmux 配置
+
+远程控制 tmux 会话技能，用于管理后台终端会话。
+
+**主要功能**:
+- 查看 tmux 会话状态 (`tmux list-sessions`)
+- 捕获会话输出 (`tmux capture-pane`)
+- 发送按键输入 (`tmux send-keys`)
+- 管理窗口和面板
+
+**使用方式**:
+```bash
+# 列出所有会话
+tmux ls
+
+# 查看会话最后 20 行输出
+tmux capture-pane -t shared -p | tail -20
+
+# 发送命令到会话
+tmux send-keys -t shared "命令" Enter
+```
 
 ---
 
