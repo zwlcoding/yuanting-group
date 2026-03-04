@@ -6,11 +6,12 @@
 
 ## 更新时间
 
-- **更新日期**: 2026-03-03
+- **更新日期**: 2026-03-04
 - **更新人**: 亏总 🎲 (战略总监)
-- **版本**: v1.6
+- **版本**: v1.7
 
 **更新记录**:
+- v1.7 (2026-03-04): 添加多 Agent 通信配置（sessions.visibility、agentToAgent）、混合通信方案实施
 - v1.6 (2026-03-03): 增加 Discord 双模式配置与频道映射
 - v1.5 (2026-03-03): 建立多‑Agent 架构文档与工作区规划
 - v1.4 (2026-03-03): 安装 summarize CLI（PDF/URL 摘要）
@@ -134,6 +135,67 @@ npm install -g summarize
 summarize "<url>" --length long
 summarize "/path/to/file.pdf" --length long
 ```
+
+### 1.6 多 Agent 通信配置
+
+**OpenClaw 核心配置** (`~/.openclaw/openclaw.json`):
+
+```json
+{
+  "tools": {
+    "profile": "full",
+    "sessions": {
+      "visibility": "all"
+    },
+    "agentToAgent": {
+      "enabled": true,
+      "allow": ["main", "kuizong", "mozong", "hunzi", "bage"]
+    }
+  }
+}
+```
+
+**关键配置项**:
+
+| 配置项 | 值 | 说明 |
+|--------|-----|------|
+| `tools.sessions.visibility` | `"all"` | 允许跨 session 访问，**关键配置** |
+| `tools.agentToAgent.enabled` | `true` | 启用 agent 间通信 |
+| `tools.agentToAgent.allow` | `[...]` | 允许通信的 agent 列表 |
+
+**混合通信方案**:
+
+采用 **双通道通信** 确保消息 100% 送达：
+
+1. **内部通道** (`sessions_send`): 如果对方在线，立即处理任务
+2. **外部通道** (`message`): 通过 Discord 发送通知，确保送达
+
+**消息发送流程**:
+
+```javascript
+// 第1步：查找对方 session
+const sessions = await sessions_list({ kinds: ["group"], messageLimit: 5 });
+
+// 第2步：内部通信（并行）
+await sessions_send({
+  sessionKey: "agent:bage:discord:channel:1478694700176248862",
+  message: "任务内容...",
+  timeoutSeconds: 10  // 短超时，避免阻塞
+});
+
+// 第3步：外部通知（必须执行，并行）
+await message({
+  channel: "discord",
+  content: "<@1478296381973069895> 任务通知..."
+});
+```
+
+**注意事项**:
+- 必须发送到对方的 **Discord channel session**，而不是 `main`
+- `timeoutSeconds` 设为 **10 秒**，避免阻塞 workflow
+- 两个通道**并行执行**，缺一不可
+
+详见完整架构文档: [ARCHITECTURE.md](../../ARCHITECTURE.md)
 
 ---
 
@@ -296,10 +358,35 @@ openclaw mem0 search "关键词" --scope session
 **统筹频道（茶水间）**:
 - `1478293618489032820`（所有 Bot 可读可写，需 @ 才响应）
 
+**工作流验证频道**:
+- `1478694700176248862`（#测试工作流，用于 FocusPaw 项目 workflow 验证）
+
 **openclaw.json 关键配置**:
 - `discord.accounts`：多 Bot token
 - `bindings`：专属频道 peer 绑定 + 统筹频道 accountId 绑定
 - `chat.requireMention = true`
+- `channels.*.requireMention`：按频道设置 mention 要求
+
+**频道配置示例**:
+```json
+{
+  "channels": {
+    "discord": {
+      "guilds": {
+        "1478291192700604426": {
+          "channels": {
+            "1478623271393038356": { "allow": true, "requireMention": true },   // #公告
+            "1478623331551805572": { "allow": true, "requireMention": false },  // #闲聊
+            "1478623393992675338": { "allow": true, "requireMention": true },   // #复盘汇总
+            "1478623533474119791": { "allow": true, "requireMention": true },   // #focuspaw
+            "1478694700176248862": { "allow": true, "requireMention": true }    // #测试工作流
+          }
+        }
+      }
+    }
+  }
+}
+```
 
 ---
 
@@ -313,6 +400,36 @@ openclaw mem0 search "关键词" --scope session
 | 工作区 | `/root/.openclaw/workspace` |
 | Gateway 端口 | 18789 |
 | Gateway 绑定 | 127.0.0.1 (loopback) |
+
+## 六、Agent 工作区结构
+
+```
+~/.openclaw/
+├── openclaw.json              # 主配置文件
+├── agents/
+│   ├── kuizong/              # 亏总工作区
+│   │   ├── AGENTS.md         # 工作区配置（启动检查、响应规则、通信协议）
+│   │   ├── IDENTITY.md       # 身份定义（双保险规则）
+│   │   ├── SOUL.md           # 核心性格
+│   │   ├── USER.md           # 用户信息
+│   │   ├── DISCORD_FORMAT.md # Discord 格式规范
+│   │   ├── TASK_CHECKLIST.md # 任务检查清单
+│   │   └── workspace/
+│   │       └── shared-projects/
+│   │           └── FocusPaw/  # 项目工作区
+│   ├── mozong/               # 摸总工作区（结构类似）
+│   ├── hunzi/                # 混子工作区（结构类似）
+│   └── bage/                 # 八阿哥工作区（结构类似）
+└── workspace/
+    └── shared-projects/       # 共享项目目录
+        ├── BEHAVIOR.md        # 工作流行为规则
+        ├── workflow-templates.md # 消息模板
+        └── FocusPaw/          # FocusPaw 项目
+            ├── AGENTS.md
+            ├── PRD.md
+            ├── MEMORY.md
+            └── README.md
+```
 
 ---
 
